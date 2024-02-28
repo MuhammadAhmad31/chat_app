@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-import { Request, Response } from "express";
-import { Register } from "../controllers/user";
+import { Login, Register, getAllUsers, getUserById } from "../controllers/user";
 
 
 router.post('/register', Register);
+router.post('/login', Login);
+router.get('/user/:id', getUserById);
+router.get('/users', getAllUsers);
 
 module.exports = router;

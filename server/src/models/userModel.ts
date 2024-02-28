@@ -1,9 +1,9 @@
 // models/userModel.ts
 import bcrypt from 'bcrypt';
-import { User } from '../types/user.type';
+import { User, UserRegister } from '../types/user.type';
 const dbPool = require("../config/database");
 
-export const RegisterModel = async (body: User) => {
+export const RegisterModel = async (body: UserRegister) => {
     const checkUsernameQuery = 'SELECT * FROM users WHERE username = ?';
     const insertUserQuery = 'INSERT INTO users (id, name, username, password) VALUES (?, ?, ?, ?)';
 
@@ -42,6 +42,34 @@ export const loginModel = async (username: string, password: string) => {
         }
 
         return user;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const findOne = async (id: string) => {
+    const sqlQuery = 'SELECT * FROM users WHERE id = ?';
+    const values = [id];
+
+    try {
+        const [rows] = await dbPool.execute(sqlQuery, values);
+
+        if (rows.length === 0) {
+            throw new Error(`User with ID ${id} not found`);
+        }
+
+        return rows[0];
+    } catch (err) {
+        throw err;
+    }
+};
+
+export const findAll = async () => {
+    const sqlQuery = 'SELECT * FROM users';
+
+    try {
+        const [rows] = await dbPool.execute(sqlQuery);
+        return rows;
     } catch (err) {
         throw err;
     }
