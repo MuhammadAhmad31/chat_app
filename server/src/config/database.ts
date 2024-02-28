@@ -7,4 +7,13 @@ const dbPool = mysql.createPool({
     database: process.env.DB_DATABASE,
 })
 
+dbPool.getConnection((err: { message: any; }, connection: { release: () => void; }) => {
+    if (err) {
+        console.error('Error connecting to the database:', err.message);
+        return;
+    }  
+    console.log('Connected to the database!');
+    connection.release();
+});
+
 module.exports =  dbPool.promise()
