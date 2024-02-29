@@ -82,6 +82,7 @@ export const getAllUsersController = async (req: Request, res: Response) => {
         const users: User[] = await findAll();
 
         const data = users.map(user => ({
+            id: user.id,
             username: user.username,
             name: user.name,
         }));

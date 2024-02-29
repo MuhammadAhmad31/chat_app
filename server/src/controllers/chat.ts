@@ -16,7 +16,7 @@ export const createChatController = async (req: Request, res: Response) => {
 
     const response = {
       id: chatId,
-      members: newChat.members.map(String)
+      members: newChat.members.map(Number)
     };
 
     handleSuccessResponse(res, 'Create chat success', response, 201);

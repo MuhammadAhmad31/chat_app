@@ -13,6 +13,7 @@ export type UserLogin = {
 }
 
 export type User = {
+    id?: number;
     name: string;
     username?: string;
 }
