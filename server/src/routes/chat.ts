@@ -1,8 +1,10 @@
-const express = require("express");
-const router = express.Router();
-import { Request, Response } from "express";
-import { getChat } from "../controllers/chat";
+import express from 'express';
+import { createChatController, findChatController, getUserChatController } from '../controllers/chat';
 
-router.get('/', getChat);
+const router = express.Router();
+
+router.post('/chats', createChatController);
+router.get('/chats/:userId', getUserChatController);
+router.get('/chats/:member1/:member2', findChatController);
 
 module.exports = router;

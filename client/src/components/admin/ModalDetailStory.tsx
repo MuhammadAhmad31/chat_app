@@ -1,6 +1,6 @@
 import { useGetDetailStory } from "@/hooks/useStory";
 import { ResponseApi } from "@/types/responseApi.type";
-import { Story } from "@/types/story.type";
+import { Story } from "@/types/user.type";
 import React, { Fragment, useEffect, useState } from "react";
 import {
   AlertDialogCancel,

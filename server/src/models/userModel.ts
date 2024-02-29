@@ -1,4 +1,3 @@
-// models/userModel.ts
 import bcrypt from 'bcrypt';
 import { User, UserRegister } from '../types/user.type';
 const dbPool = require("../config/database");

@@ -20,20 +20,17 @@ export const useLogin = () => {
     },
     {
       onSuccess: (response) => {
-        // get response data
         const data = response.data as AuthLoginResponse;
 
         Cookies.set("id", String(data.data.id));
 
-        // if (data) {
-        //   window.location.href = "/story";
-        // }
+        if (data) {
+          window.location.href = "/chat";
+        }
       },
       onError: ({ response }) => {
-        // get response Error
         const { message } = response.data as ResponseApiError;
 
-        // show Notification
         toast({
           variant: "destructive",
           title: "Gagal",

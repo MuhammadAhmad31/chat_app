@@ -4,7 +4,7 @@ import { RegisterModel, findAll, findOne, loginModel } from "../models/userModel
 import { handleErrorResponse, handleSuccessResponse } from "../utils/ResponseHandler";
 import { User, UserLogin, UserRegister } from "../types/user.type";
 
-export const Register = async (req: Request, res: Response) => {
+export const RegisterController = async (req: Request, res: Response) => {
     const { body } = req;
 
     if (!body.id || !body.name || !body.username || !body.password) {
@@ -25,7 +25,7 @@ export const Register = async (req: Request, res: Response) => {
     }
 };
 
-export const Login = async (req: Request, res: Response) => {
+export const LoginController = async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -52,7 +52,7 @@ export const Login = async (req: Request, res: Response) => {
     }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserByIdController = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
@@ -77,7 +77,7 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsersController = async (req: Request, res: Response) => {
     try {
         const users: User[] = await findAll();
 

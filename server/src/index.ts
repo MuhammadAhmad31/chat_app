@@ -2,6 +2,7 @@ const express = require("express");
 import { Request, Response } from "express";
 import chatRoute = require("./routes/chat");
 import userRoute = require("./routes/user");
+import messageRoute = require("./routes/message");
 import { handleErrorResponse } from "./utils/ResponseHandler";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(cors({
 
 app.use('/api', chatRoute);
 app.use('/api', userRoute);
+app.use('/api', messageRoute);
 
 app.use((req: Request, res: Response, err: any) => {
     handleErrorResponse(res, "Not Found", "Not Found", 404);
