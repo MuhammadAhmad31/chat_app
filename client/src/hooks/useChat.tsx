@@ -1,4 +1,4 @@
-import { createChat, findChatByIdUser } from "@/api/chat";
+import { createChat, findChatByIdUser, findChatByTwoUsers } from "@/api/chat";
 import { toast, useToast } from "@/components/ui/use-toast";
 import { ChatForm, ResponseChatForm } from "@/types/chat.type";
 import { ResponseApiError } from "@/types/responseApi.type";
@@ -38,6 +38,32 @@ export const useGetChatByIdUser = (id: number) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
+
+  return {
+    data: {
+      chats: res?.data,
+      message: res?.message,
+    },
+    isLoading,
+    error,
+  };
+};
+
+export const useGetChatByTwoUsers = (firstId: number, secondId: number) => {
+  const { data, isLoading, isError, error } = useQuery(
+    ["chats", firstId, secondId],
+    () => {
+      return findChatByTwoUsers(firstId!, secondId!);
+    },
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const err = error as AxiosError<ResponseApiError>;
+  const res = data?.data;
+  const message = err?.response?.data?.message;
 
   return {
     data: {

@@ -14,6 +14,18 @@ export const findChatByIdUser = async (id: number) => {
     }
 }
 
+export const findChatByTwoUsers = async (firstId: number, secondId: number) => {
+    try {
+        const response = await axiosInstance.get(`/chats/${firstId}/${secondId}`);
+        return response
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            throw err as AxiosError
+        }
+        throw err;
+    }
+}
+
 export const createChat = async (payload: ChatForm) => {
     try {
         const response = await axiosInstance.post('/chats', payload);

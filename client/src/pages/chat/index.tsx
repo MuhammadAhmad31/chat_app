@@ -11,7 +11,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreateChat, useGetChatByIdUser } from "@/hooks/useChat";
+import {
+  useCreateChat,
+  useGetChatByIdUser,
+  useGetChatByTwoUsers,
+} from "@/hooks/useChat";
 import { useGetOneUser, useGetUser } from "@/hooks/useUser";
 import type { Chat } from "@/types/chat.type";
 import { User } from "@/types/user.type";
@@ -20,6 +24,7 @@ import { deleteCookie, getCookie } from "@/utils/cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -119,6 +124,8 @@ export default function Chat() {
     await addChat(formDataWithId);
   };
 
+  const router = useRouter();
+
   return (
     <>
       <ContainerLayouts>
@@ -145,7 +152,7 @@ export default function Chat() {
           </div>
         </div>
         <div className="flex h-screen ">
-          <div className="w-4/12 p-4 bg-secondary-dark">
+          <div className="w-full p-4 bg-secondary-dark">
             <Card>
               <CardHeader>
                 <CardTitle className="text-black text-2xl font-bold mb-4">
@@ -155,7 +162,12 @@ export default function Chat() {
               <CardContent>
                 <div>
                   {matching.map((user) => (
-                    <Card key={user.id} className="flex items-center pl-4 my-2">
+                    <Card
+                      key={user.id}
+                      className="flex items-center pl-4 my-2"
+                      onClick={() => router.push(`/chat/box/${user.id}`)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <Avatar>
                         <AvatarImage
                           className="rounded-full w-12"
@@ -181,12 +193,6 @@ export default function Chat() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Right Column (Chat) */}
-          <div className="flex-1 p-4">
-            <h2 className="text-white text-2xl font-bold mb-4">Chat</h2>
-            {/* Add your chat component here */}
           </div>
         </div>
       </ContainerLayouts>
