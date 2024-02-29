@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 import { useState } from "react";
 import {
-  // Hydrate,
+  Hydrate,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";

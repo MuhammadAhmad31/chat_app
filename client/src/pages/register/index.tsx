@@ -10,17 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useLogin } from "@/hooks/useAuth";
+import { useRegister } from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-export default function Login() {
+export default function Register() {
   // use react query
-  const { login, isLoading, isSuccess } = useLogin();
+  const { register, isLoading, isSuccess } = useRegister();
 
   const FormSchema = z.object({
+    name: z.string(),
     username: z.string().nonempty(),
     password: z.string().nonempty(),
   });
@@ -28,13 +29,20 @@ export default function Login() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      name: "",
       username: "",
       password: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    await login(data);
+    const randomId = Math.floor(Math.random() * 1000);
+
+    const formDataWithId = {
+      ...data,
+      id: randomId,
+    };
+    await register(formDataWithId);
   };
 
   return (
@@ -44,7 +52,7 @@ export default function Login() {
           <Card className="rounded-sm md:w-1/4">
             <CardHeader>
               <CardTitle className="text-3xl font-bold text-center text-button-color-teal">
-                Login
+                Register
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -53,6 +61,31 @@ export default function Login() {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="w-full space-y-4"
                 >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <>
+                        <FormItem>
+                          <FormLabel className="sr-only">Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              className="text-center border-button-color-teal"
+                              placeholder="Masukan nama"
+                              type="text"
+                              {...field}
+                              // onChange={(val) => {
+                              //   console.log(val);
+
+                              // }}
+                              required
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      </>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="username"
@@ -106,7 +139,7 @@ export default function Login() {
               </Form>
               <div className="flex justify-center items-center">
                 <p className="text-sm pt-2 text-center text-button-color-teal">
-                  <Link href="/register">Belum punya akun?</Link>
+                  <Link href="/login">Kembali ke login</Link>
                 </p>
               </div>
             </CardContent>

@@ -37,6 +37,7 @@ export const Login = async (req: Request, res: Response) => {
         const user: UserLogin = await loginModel(username, password);
 
         const userDataWithPassword = {
+            id : user.id,
             username: user.username,
             name: user.name
         }
