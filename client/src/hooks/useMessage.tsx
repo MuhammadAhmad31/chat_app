@@ -37,6 +37,7 @@ export const useGetMessageByIdChat = (id: number, socket: any) => {
     if (isError) {
       notif();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
 
   return {
