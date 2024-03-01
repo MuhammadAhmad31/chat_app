@@ -7,8 +7,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 
-export const useGetMessageByIdChat = (id: number) => {
-  const { data, isLoading, isError, error } = useQuery(
+export const useGetMessageByIdChat = (id: number, socket: any) => {
+  const { data, isLoading, isError, error, refetch } = useQuery(
     ["chats", id],
     () => {
       return messageByIdChat(id!);
@@ -16,6 +16,7 @@ export const useGetMessageByIdChat = (id: number) => {
     {
       retry: false,
       refetchOnWindowFocus: false,
+      refetchInterval: 1,
     }
   );
 
@@ -36,7 +37,6 @@ export const useGetMessageByIdChat = (id: number) => {
     if (isError) {
       notif();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
 
   return {
@@ -45,7 +45,9 @@ export const useGetMessageByIdChat = (id: number) => {
       message: res?.message,
     },
     isLoading,
+    isError,
     error,
+    refetch,
   };
 };
 
@@ -60,11 +62,11 @@ export const useSendMessage = () => {
       onSuccess: (response) => {
         const data = response.data as CreateMessageResponse;
 
-        toast({
-          variant: "success",
-          title: "Berhasil",
-          description: `${data.message}`,
-        });
+        // toast({
+        //   variant: "success",
+        //   title: "Berhasil",
+        //   description: `${data.message}`,
+        // });
       },
       onError: ({ response }) => {
         const { message } = response.data as ResponseApiError;

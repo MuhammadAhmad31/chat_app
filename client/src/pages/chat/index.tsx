@@ -129,8 +129,8 @@ export default function Chat() {
   return (
     <>
       <ContainerLayouts>
-        <div className="flex flex-col justify-center items-center gap-3">
-          <div className="flex justify-cente items-center gap-3">
+        <div className="flex flex-col items-center justify-center gap-3">
+          <div className="flex items-center gap-3 justify-cente">
             <h1>chat app {user?.name}</h1>
             <Button variant="destructive" onClick={handleLogout}>
               Logout
@@ -155,7 +155,7 @@ export default function Chat() {
           <div className="w-full p-4 bg-secondary-dark">
             <Card>
               <CardHeader>
-                <CardTitle className="text-black text-2xl font-bold mb-4">
+                <CardTitle className="mb-4 text-2xl font-bold text-black">
                   Chat
                 </CardTitle>
               </CardHeader>
@@ -170,21 +170,21 @@ export default function Chat() {
                     >
                       <Avatar>
                         <AvatarImage
-                          className="rounded-full w-12"
+                          className="w-12 rounded-full"
                           src="https://github.com/shadcn.png"
                           alt="user"
                         />
                         <AvatarFallback>User</AvatarFallback>
                       </Avatar>
-                      <CardContent className="pt-3 w-full">
+                      <CardContent className="w-full pt-3">
                         <div className="flex justify-between">
                           <div>
-                            <p className="font-bold">{user.name}</p>
-                            <p>hai kau dimana</p>
+                            <p className="text-2xl font-bold">{user.name}</p>
+                            {/* <p>hai kau dimana</p> */}
                           </div>
                           <div>
-                            <p className="text-secondary-dark">12/12/24</p>
-                            <Badge variant="destructive">2</Badge>
+                            {/* <p className="text-secondary-dark">12/12/24</p>
+                            <Badge variant="destructive">2</Badge> */}
                           </div>
                         </div>
                       </CardContent>

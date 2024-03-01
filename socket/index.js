@@ -1,20 +1,18 @@
 const { Server } = require("socket.io");
-const io = new Server({ cors: "http://localhost:3000" });
+const http = require("http"); 
+
+const server = http.createServer(); 
+const io = new Server(server, { cors: { origin: "http://localhost:3000" } });
 
 io.on("connection", (socket) => {
+  console.log("User connected: ", socket.id);
 
-  socket.on("joinRoom", (roomId) => {
-    socket.join(roomId);
+  socket.on("message", (message) => {
+    io.emit("receive", message);
   });
 
-  socket.on("leaveRoom", (roomId) => {
-    socket.leave(roomId);
-  });
-
-  socket.on("sendMessage", (message) => {
-    io.to(message.chatId).emit("newMessage", message);
-    console.log(message);
-  });
 });
 
-io.listen(8000);
+server.listen(8000, () => {
+  console.log("Server is running on port 8000");
+});
