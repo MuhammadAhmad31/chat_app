@@ -2,51 +2,21 @@ import { ContainerLayouts } from "@/components/Layout/ContainerLayouts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  useCreateChat,
-  useGetChatByIdUser,
-  useGetChatByTwoUsers,
-} from "@/hooks/useChat";
+import { useCreateChat, useGetChatByIdUser } from "@/hooks/useChat";
 import { useGetOneUser, useGetUser } from "@/hooks/useUser";
 import type { Chat } from "@/types/chat.type";
 import { User } from "@/types/user.type";
-import { filterUsersById, getMembersByIdNotEqual } from "@/utils/contact";
+import { getMembersByIdNotEqual } from "@/utils/contact";
 import { deleteCookie, getCookie } from "@/utils/cookie";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 
 export default function Chat() {
   const [user, setUser] = useState<User>();
   const [chat, setChat] = useState<Chat[]>();
   const [userAll, setAllUsers] = useState();
   const { addChat, isLoading, isSuccess } = useCreateChat();
-
-  const FormSchema = z.object({
-    username: z.string().nonempty(),
-    password: z.string().nonempty(),
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
 
   const id = Number(getCookie("id"));
 
@@ -102,10 +72,6 @@ export default function Chat() {
     : { matching: [], nonMatching: [] };
 
   const dataNonMatching = nonMatching.filter((item) => item.id !== id);
-
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
-  };
 
   const handleLogout = () => {
     deleteCookie();
