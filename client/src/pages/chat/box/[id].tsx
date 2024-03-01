@@ -20,6 +20,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { io, Socket } from "socket.io-client";
+import { useGetOneUser } from "@/hooks/useUser";
+import Link from "next/link";
 const socket: Socket = io("http://localhost:8000");
 
 export const ChatBox = () => {
@@ -27,6 +29,7 @@ export const ChatBox = () => {
   const [chat, setChat] = useState<ChatMessage | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const { addMessage } = useSendMessage();
+  const [user, setUser] = useState<any>();
 
   const router = useRouter();
   const userId = Number(router.query.id);
@@ -41,6 +44,15 @@ export const ChatBox = () => {
       text: "",
     },
   });
+  {
+    const { data } = useGetOneUser(id);
+
+    useEffect(() => {
+      if (data.user) {
+        setUser(data.user);
+      }
+    }, [data]);
+  }
 
   const { data: chatData } = useGetChatByTwoUsers(id, userId);
 
@@ -95,8 +107,10 @@ export const ChatBox = () => {
           <div className="w-full p-4 bg-secondary-dark">
             <Card>
               <CardHeader>
-                <CardTitle className="mb-4 text-2xl font-bold text-black">
-                  Message
+                <Link href="/chat">Kembali</Link>
+                <CardTitle className="mb-4 text-2xl font-bold">
+                  Message to{" "}
+                  <span className="text-teal-400 ">{user?.name}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>

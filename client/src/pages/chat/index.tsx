@@ -130,13 +130,16 @@ export default function Chat() {
     <>
       <ContainerLayouts>
         <div className="flex flex-col items-center justify-center gap-3">
-          <div className="flex items-center gap-3 justify-cente">
-            <h1>chat app {user?.name}</h1>
+          <div className="flex items-center justify-between w-full gap-3 mb-14">
+            <h1 className="text-2xl font-bold">
+              Nge<span className="text-orange-500 ">Chat</span> {user?.name}
+            </h1>
             <Button variant="destructive" onClick={handleLogout}>
               Logout
             </Button>
           </div>
-          <div>
+          <div className="flex items-center justify-center gap-2 p-4 rounded-md bg-slate-800">
+            <h2 className="text-white ">Pengguna Aplikasi : </h2>
             {dataNonMatching &&
               dataNonMatching.map((user) => (
                 <Badge
